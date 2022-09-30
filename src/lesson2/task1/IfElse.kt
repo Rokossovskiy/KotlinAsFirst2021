@@ -3,8 +3,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
-import kotlin.math.max
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
 // Максимальное количество баллов = 6
@@ -68,7 +67,16 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    val sge = age % 10
+    return when {
+        (age in 10..20) || (age in 110..120) -> "$age лет"
+        sge == 1 -> "$age год"
+        sge == 2 || sge == 3 || sge == 4 -> ("$age года")
+        sge == 5 || sge == 6 || sge == 7 || sge == 8 || sge == 9 -> "$age лет"
+        else -> "*****"
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -78,10 +86,15 @@ fun ageDescription(age: Int): String = TODO()
  * Определить, за какое время он одолел первую половину пути?
  */
 fun timeForHalfWay(
-    t1: Double, v1: Double,
-    t2: Double, v2: Double,
-    t3: Double, v3: Double
-): Double = TODO()
+    t1: Double, v1: Double, t2: Double, v2: Double, t3: Double, v3: Double
+): Double {
+    val s = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+    return when {
+        s <= t1 * v1 -> s / v1
+        s <= t1 * v1 + t2 * v2 -> t1 + (s - t1 * v1) / v2
+        else -> t1 + t2 + (s - t1 * v1 - t2 * v2) / v3
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -93,10 +106,13 @@ fun timeForHalfWay(
  * Считать, что ладьи не могут загораживать друг друга
  */
 fun whichRookThreatens(
-    kingX: Int, kingY: Int,
-    rookX1: Int, rookY1: Int,
-    rookX2: Int, rookY2: Int
-): Int = TODO()
+    kingX: Int, kingY: Int, rookX1: Int, rookY1: Int, rookX2: Int, rookY2: Int
+): Int = when {
+    (kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2) -> 3
+    kingX == rookX1 || kingY == rookY1 -> 1
+    kingX == rookX2 || kingY == rookY2 -> 2
+    else -> 0
+}
 
 /**
  * Простая (2 балла)
@@ -109,10 +125,13 @@ fun whichRookThreatens(
  * Считать, что ладья и слон не могут загораживать друг друга.
  */
 fun rookOrBishopThreatens(
-    kingX: Int, kingY: Int,
-    rookX: Int, rookY: Int,
-    bishopX: Int, bishopY: Int
-): Int = TODO()
+    kingX: Int, kingY: Int, rookX: Int, rookY: Int, bishopX: Int, bishopY: Int
+): Int = when {
+    (abs(kingX - bishopX) == abs(kingY - bishopY)) && (kingX == rookX || kingY == rookY) -> 3
+    kingX == rookX || kingY == rookY -> 1
+    abs(kingX - bishopX) == abs(kingY - bishopY) -> 2
+    else -> 0
+}
 
 /**
  * Простая (2 балла)
@@ -132,4 +151,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return when {
+        d <= b && c >= a -> (d - c)
+        b <= d && a >= c -> (b - a)
+        b in c..d -> (b - c)
+        a in c..d -> (d - a)
+        else -> (-1)
+    }
+}

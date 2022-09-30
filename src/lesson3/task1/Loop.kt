@@ -17,7 +17,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -72,7 +72,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var k = 0
+    var n1 = n
+    if (n1 == 0) k = 1
+    else while (n1 > 0) {
+        k += 1
+        n1 /= 10
+    }
+    return k
+}
 
 /**
  * Простая (2 балла)
@@ -80,14 +89,23 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int = if (n <= 2) 1 else fib(n - 1) + fib(n - 2)
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var x = 0
+    for (i in 2..n) {
+        if (n % i == 0) {
+            x = i
+            break
+        }
+    }
+    return x
+}
 
 /**
  * Простая (2 балла)
@@ -192,7 +210,18 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var m = n
+    var x = n
+    var k = 0
+    while (m != 0) {
+        k += 1
+        m /= 10
+    }
+    val mk = k - n
+    for (i in 1..mk) x /= 10
+    return x % 10
+}
 
 /**
  * Сложная (5 баллов)
