@@ -2,6 +2,9 @@
 
 package lesson3.task1
 
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -89,7 +92,18 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = if (n <= 2) 1 else fib(n - 1) + fib(n - 2)
+fun fib(n: Int): Int {
+    var a = 0
+    var b = 1
+    var f = 0
+    while (f < n) {
+        val c = a
+        a += b
+        b = c
+        f++
+    }
+    return a
+}
 
 /**
  * Простая (2 балла)
@@ -112,7 +126,18 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var k = 0
+    while (k == 0) {
+        for (i in n - 1 downTo 1) {
+            if (n % i == 0) {
+                k = i
+                break
+            }
+        }
+    }
+    return k
+}
 
 /**
  * Простая (2 балла)
@@ -130,7 +155,15 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var k = 0
+    var xx = x
+    while (xx != 1) {
+        if (xx % 2 == 0) xx /= 2 else xx = xx * 3 + 1
+        k++
+    }
+    return k
+}
 
 /**
  * Средняя (3 балла)
@@ -138,7 +171,16 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    val d = max(m, n)
+    var v = 2
+    var s = d
+    while (s % m != 0 || s % n != 0) {
+        s = v * d
+        v += 1
+    }
+    return s
+}
 
 /**
  * Средняя (3 балла)
@@ -147,7 +189,17 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var x = true
+    for (i in 2..min(m, n) / 2) {
+        if (m % i == 0 && n % i == 0) {
+            x = true
+            break
+        } else x = false
+    }
+    return x
+}
+
 
 /**
  * Средняя (3 балла)
@@ -211,17 +263,28 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var m = n
-    var x = n
-    var k = 0
-    while (m != 0) {
-        k += 1
-        m /= 10
+    var k = n
+    var x: Int
+    var c = 1
+    var p = 1
+    var z: Int
+    var m = 1
+    while (k >= p) {
+        x = (c + 1) * (c + 1)
+        c += 1
+        z = x
+        p = if (x / 10 == 0) 1 else 0
+        while (z > 0) {
+            k--
+            p++
+            z /= 10
+        }
+        m *= 10.0.pow(p - 1).toInt()
+        m += x
     }
-    val mk = k - n
-    for (i in 1..mk) x /= 10
-    return x % 10
+    return m
 }
+
 
 /**
  * Сложная (5 баллов)
