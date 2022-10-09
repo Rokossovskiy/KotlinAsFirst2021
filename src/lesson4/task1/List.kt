@@ -200,6 +200,7 @@ fun factorizeToString(n: Int): String {
             if (x % i == 0) {
                 x /= i
                 m.add(i)
+                break
             }
         }
     }

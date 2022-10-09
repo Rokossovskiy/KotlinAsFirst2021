@@ -191,11 +191,11 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
     var x = true
-    for (i in 2..min(m, n) / 2) {
+    for (i in 2..min(m, n)) {
         if (m % i == 0 && n % i == 0) {
-            x = true
+            x = false
             break
-        } else x = false
+        } else x = true
     }
     return x
 }
