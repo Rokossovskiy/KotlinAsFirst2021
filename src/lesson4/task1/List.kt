@@ -3,7 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 4: списки
 // Максимальное количество баллов = 12
@@ -156,7 +156,13 @@ fun times(a: List<Int>, b: List<Int>): Int = TODO()
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int = TODO()
+fun polynom(p: List<Int>, x: Int): Int {
+    var m = 0
+    for (i in p) {
+        m += i * (x.toDouble().pow(p.indexOf(i))).toInt()
+    }
+    return m
+}
 
 /**
  * Средняя (3 балла)
@@ -186,7 +192,19 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    var x = n
+    val m = mutableListOf<Int>()
+    while (x > 1) {
+        for (i in 2..n) {
+            if (x % i == 0) {
+                x /= i
+                m.add(i)
+            }
+        }
+    }
+    return m.joinToString(separator = "*")
+}
 
 /**
  * Средняя (3 балла)

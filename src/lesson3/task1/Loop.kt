@@ -262,28 +262,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int {
-    var k = n
-    var x: Int
-    var c = 1
-    var p = 1
-    var z: Int
-    var m = 1
-    while (k >= p) {
-        x = (c + 1) * (c + 1)
-        c += 1
-        z = x
-        p = if (x / 10 == 0) 1 else 0
-        while (z > 0) {
-            k--
-            p++
-            z /= 10
-        }
-        m *= 10.0.pow(p - 1).toInt()
-        m += x
-    }
-    return m
-}
+fun squareSequenceDigit(n: Int): Int = TODO()
 
 
 /**
