@@ -120,14 +120,20 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    var s = 0.0
+    for (i in v) {
+        s += i.pow(2.0)
+    }
+    return sqrt(s)
+}
 
 /**
  * Простая (2 балла)
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double = if (list.isNotEmpty()) list.sum() / list.size.toDouble() else 0.0
 
 /**
  * Средняя (3 балла)
@@ -137,7 +143,13 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    val x = mean(list)
+    if (list.isNotEmpty()) for (i in 0 until list.size) {
+        list[i] -= x
+    }
+    return list
+}
 
 /**
  * Средняя (3 балла)
@@ -269,4 +281,51 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    var x = n
+    val onedva = listOf(
+        "один", "два", "три", "четыре", "пять", "шесть", "семь",
+        "восемь", "девять", "десять", "одиннадцать", "двенадцать",
+        "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
+        "семнадцать", "восемнадцать", "девятнадцать"
+    )
+    val des = listOf(
+        "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят",
+        "семьдесят", "восемьдесят", "девяносто"
+    )
+    val sot = listOf(
+        "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
+        "семьсот", "восемьсот", "девятьсот"
+    )
+    val tsch = listOf(
+        "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи"
+    )
+    val s = mutableListOf<String>()
+    if (x / 100000 != 0) {
+        s.add(sot[x / 100000 - 1])
+        if (x / 1000 % 100 == 0) s.add("тысяч")
+    }
+    x %= 100000
+    if (x / 10000 != 0) {
+        if (x / 10000 > 1) {
+            s.add(des[x / 10000 - 2])
+            if (x / 1000 % 10 == 0) s.add("тысяч")
+        } else {
+            s.add(onedva[x / 1000 - 1])
+            s.add("тысяч")
+            x %= 1000
+        }
+    }
+    if (x / 1000 % 10 in 1..4) s.add(tsch[x / 1000 % 10 - 1])
+    else if (x / 1000 % 10 != 0) {
+        s.add(onedva[x / 1000 % 10 - 1])
+        s.add("тысяч")
+    }
+    x %= 1000
+    if (x / 100 != 0) s.add(sot[x / 100 - 1])
+    x %= 100
+    if (x / 10 > 1) s.add(des[x / 10 - 2])
+    if (x / 10 == 1) s.add(onedva[x - 1])
+    else if (x % 10 != 0) s.add(onedva[x % 10 - 1])
+    return s.joinToString(" ")
+}

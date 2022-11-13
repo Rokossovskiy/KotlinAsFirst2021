@@ -1,11 +1,9 @@
-@file:Suppress("UNUSED_PARAMETER")
+@file:Suppress("UNUSED_PARAMETER", "UNUSED_EXPRESSION")
 
 package lesson3.task1
 
-import kotlin.math.max
-import kotlin.math.min
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
+
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -77,7 +75,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var k = 0
-    var n1 = n
+    var n1 = abs(n)
     if (n1 == 0) k = 1
     else while (n1 > 0) {
         k += 1
@@ -128,12 +126,10 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var k = 0
-    while (k == 0) {
-        for (i in n - 1 downTo 1) {
-            if (n % i == 0) {
-                k = i
-                break
-            }
+    for (i in n - 1 downTo 1) {
+        if (n % i == 0) {
+            k = i
+            break
         }
     }
     return k
@@ -149,7 +145,7 @@ fun maxDivisor(n: Int): Int {
  *   ИНАЧЕ
  *     Xслед = 3 * X + 1
  *
- * например
+ * Например,
  *   15 46 23 70 35 106 53 160 80 40 20 10 5 16 8 4 2 1 4 2 1 4 2 1 ...
  * Данная последовательность рано или поздно встречает X == 1.
  * Написать функцию, которая находит, сколько шагов требуется для
@@ -195,7 +191,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
         if (m % i == 0 && n % i == 0) {
             x = false
             break
-        } else x = true
+        } else x
     }
     return x
 }
@@ -208,7 +204,15 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var a = n
+    var x = 0
+    while (a != 0) {
+        x = x * 10 + a % 10
+        a /= 10
+    }
+    return x
+}
 
 /**
  * Средняя (3 балла)
@@ -219,7 +223,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = revert(n) == n
 
 /**
  * Средняя (3 балла)
@@ -229,7 +233,20 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var x = n
+    var a: Int
+    var f = false
+    while (x / 10 != 0) {
+        a = x % 10
+        x /= 10
+        if (a != x % 10) {
+            f = true
+            break
+        }
+    }
+    return f
+}
 
 /**
  * Средняя (4 балла)
@@ -262,7 +279,26 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var k = n
+    var x = 1
+    var c = 0
+    var q = 0
+    var p = 0
+    var z: Int
+    while (k > 0) {
+        x = (c + 1) * (c + 1)
+        c += 1
+        z = digitNumber(x)
+        k -= z
+        p += z
+    }
+    if (p != n) while (p > n) {
+        q = x / 10
+        p -= 1
+    } else q = x % 10
+    return q % 10
+}
 
 
 /**
@@ -274,4 +310,22 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var k = n
+    var x = 1
+    var c = 0
+    var p = 0
+    var z: Int
+    while (k > 0) {
+        c += 1
+        x = fib(c)
+        z = digitNumber(x)
+        k -= z
+        p += z
+    }
+    while (p > n) {
+        x /= 10
+        p -= 1
+    }
+    return x % 10
+}

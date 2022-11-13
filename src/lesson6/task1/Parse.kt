@@ -2,6 +2,7 @@
 
 package lesson6.task1
 
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -27,7 +28,7 @@ fun timeStrToSeconds(str: String): Int {
  * Пример
  *
  * Дано число n от 0 до 99.
- * Вернуть его же в виде двухсимвольной строки, от "00" до "99"
+ * Вернуть его же в виде двух символьной строки, от "00" до "99"
  */
 fun twoDigitStr(n: Int) = if (n in 0..9) "0$n" else "$n"
 
@@ -110,7 +111,7 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Результаты спортсмена на соревнованиях в прыжках в длину представлены строкой вида
  * "706 - % 717 % 703".
  * В строке могут присутствовать числа, черточки - и знаки процента %, разделённые пробелами;
- * число соответствует удачному прыжку, - пропущенной попытке, % заступу.
+ * число соответствует удачному прыжку, — пропущенной попытке, % заступу.
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
@@ -136,9 +137,25 @@ fun bestHighJump(jumps: String): Int = TODO()
  * использующее целые положительные числа, плюсы и минусы, разделённые пробелами.
  * Наличие двух знаков подряд "13 + + 10" или двух чисел подряд "1 2" не допускается.
  * Вернуть значение выражения (6 для примера).
- * Про нарушении формата входной строки бросить исключение IllegalArgumentException
+ * При нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+
+fun plusMinus(expression: String): Int {
+    if (!expression.matches(Regex("(\\d+ [+-] )*\\d+"))) {
+        throw IllegalArgumentException(expression)
+    }
+    val pm = expression.split(" ")
+    var res = 0
+    for (i in pm.indices step 2) {
+        if (i == 0)
+            res += pm[i].toInt()
+        else when {
+            pm[i - 1] == "+" -> res += pm[i].toInt()
+            pm[i - 1] == "-" -> res -= pm[i].toInt()
+        }
+    }
+    return res
+}
 
 /**
  * Сложная (6 баллов)
@@ -162,7 +179,21 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val d = description.split("; ")
+    val a = mutableMapOf<Float, String>()
+    var z = 0.0.toFloat()
+    try {
+        for (i in d) {
+            val x = i.split(" ")
+            a[x[1].toFloat()] = x[0]
+            z = maxOf(x[1].toFloat(), z)
+        }
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+    return a[z].toString()
+}
 
 /**
  * Сложная (6 баллов)

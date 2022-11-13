@@ -72,9 +72,8 @@ fun ageDescription(age: Int): String {
     return when {
         (age in 10..20) || (age in 110..120) -> "$age лет"
         sge == 1 -> "$age год"
-        sge == 2 || sge == 3 || sge == 4 -> ("$age года")
-        sge == 5 || sge == 6 || sge == 7 || sge == 8 || sge == 9 -> "$age лет"
-        else -> "*****"
+        sge in 2..4 -> ("$age года")
+        else -> "$age лет"
     }
 }
 
@@ -141,31 +140,29 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return when {
-        a >= b && a >= c && a < b + c -> return when {
-            a.pow(2.0) > b.pow(2.0) + c.pow(2.0) -> 2
-            a.pow(2.0) == b.pow(2.0) + c.pow(2.0) -> 1
-            a.pow(2.0) < b.pow(2.0) + c.pow(2.0) -> 0
-            else -> -1
-        }
-
-        b >= a && b >= c && b < a + c -> return when {
-            b.pow(2.0) > a.pow(2.0) + c.pow(2.0) -> 2
-            b.pow(2.0) == a.pow(2.0) + c.pow(2.0) -> 1
-            b.pow(2) < a.pow(2) + c.pow(2) -> 0
-            else -> -1
-        }
-
-        c >= a && c >= b && c < b + a -> return when {
-            c.pow(2) > b.pow(2) + a.pow(2) -> 2
-            c.pow(2) == b.pow(2) + a.pow(2) -> 1
-            c.pow(2) < b.pow(2) + a.pow(2) -> 0
-            else -> -1
-        }
-
+fun triangleKind(a: Double, b: Double, c: Double): Int = when {
+    a >= b && a >= c && a < b + c -> when {
+        a.pow(2.0) > b.pow(2.0) + c.pow(2.0) -> 2
+        a.pow(2.0) == b.pow(2.0) + c.pow(2.0) -> 1
+        a.pow(2.0) < b.pow(2.0) + c.pow(2.0) -> 0
         else -> -1
     }
+
+    b >= a && b >= c && b < a + c -> when {
+        b.pow(2.0) > a.pow(2.0) + c.pow(2.0) -> 2
+        b.pow(2.0) == a.pow(2.0) + c.pow(2.0) -> 1
+        b.pow(2) < a.pow(2) + c.pow(2) -> 0
+        else -> -1
+    }
+
+    c >= a && c >= b && c < b + a -> when {
+        c.pow(2) > b.pow(2) + a.pow(2) -> 2
+        c.pow(2) == b.pow(2) + a.pow(2) -> 1
+        c.pow(2) < b.pow(2) + a.pow(2) -> 0
+        else -> -1
+    }
+
+    else -> -1
 }
 
 /**
@@ -178,10 +175,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     return when {
-        d <= b && c >= a -> (d - c)
-        b <= d && a >= c -> (b - a)
-        b in c..d -> (b - c)
-        a in c..d -> (d - a)
-        else -> (-1)
+        d <= b && c >= a -> d - c
+        b <= d && a >= c -> b - a
+        b in c..d -> b - c
+        a in c..d -> d - a
+        else -> -1
     }
 }

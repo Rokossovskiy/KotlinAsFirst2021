@@ -3,8 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
-import kotlin.math.abs
-import kotlin.math.pow
+import kotlin.math.*
 
 /**
  * Пример
@@ -29,12 +28,8 @@ fun isNumberHappy(number: Int): Boolean = (number % 10 + number / 10 % 10 == num
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
-    x1 == x2 -> true
-    y1 == y2 -> true
-    abs(x1 - x2) == abs(y1 - y2) -> true
-    else -> false
-}
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = ((x1 == x2) ||
+        (y1 == y2) || abs(x1 - x2) == abs(y1 - y2))
 
 
 /**
@@ -60,7 +55,7 @@ fun daysInMonth(month: Int, year: Int): Int = when {
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = ((x1 - x2).pow(0.5) + (y1 - y2).pow(0.5)).pow(0.5) + r1 <= r2
+): Boolean = sqrt(sqrt(x1 - x2) + sqrt(y1 - y2)) + r1 <= r2
 
 /**
  * Средняя (3 балла)
