@@ -72,7 +72,7 @@ fun ageDescription(age: Int): String {
     return when {
         (age in 10..20) || (age in 110..120) -> "$age лет"
         sge == 1 -> "$age год"
-        sge in 2..4 -> ("$age года")
+        sge in 2..4 -> "$age года"
         else -> "$age лет"
     }
 }
@@ -173,12 +173,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = when {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return when {
-        d <= b && c >= a -> d - c
-        b <= d && a >= c -> b - a
-        b in c..d -> b - c
-        a in c..d -> d - a
-        else -> -1
-    }
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = when {
+    d <= b && c >= a -> d - c
+    b <= d && a >= c -> b - a
+    b in c..d -> b - c
+    a in c..d -> d - a
+    else -> -1
 }
