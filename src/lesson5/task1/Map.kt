@@ -165,7 +165,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
     res.putAll(mapA)
     for ((k, v) in mapB) {
         if (res[k] == null) res[k] = v
-        else if (res[k] != mapB[k]) res[k] += ", " + mapB[k]
+        else if (res[k] != v) res[k] += ", $v"
     }
     return res
 }
@@ -197,7 +197,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String = TODO()
 
 /**
  * Средняя (3 балла)
@@ -293,10 +293,9 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     for (i in list.indices - 2) {
-        for (j in i + 1 until list.size) {
-            if (list[i] + list[j] == number) {
-                return Pair(i, j)
-            }
+        val x = number - list[i]
+        if (x in list) {
+            return Pair(i, list.indexOf(x))
         }
     }
     return Pair(-1, -1)
