@@ -291,12 +291,12 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    for (i in list.indices - 2) {
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int?> {
+    val res = mutableMapOf<Int, Int>()
+    for (i in list.indices) {
         val x = number - list[i]
-        if (x in list) {
-            return Pair(i, list.indexOf(x))
-        }
+        if (list[i] in res) return Pair(res[list[i]]!!, i)
+        else res[x] = i
     }
     return Pair(-1, -1)
 }
@@ -323,3 +323,5 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+
+
